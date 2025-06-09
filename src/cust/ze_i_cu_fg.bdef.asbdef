@@ -1,0 +1,59 @@
+managed implementation in class ZCL_E_BP_CU_FG unique;
+strict ( 1 );
+with draft;
+
+define behavior for ZE_I_CU_FG alias CUFGDef
+persistent table zetc_cu_fg
+draft table ZETC_CU_FG_DR
+etag master LocalLastChanged
+lock master total etag LastChanged
+authorization master( global )
+
+{
+  field ( mandatory : create )
+   CompanyCode,
+//   FinView,
+//   Area,
+   BusinessArea,
+   CuID,
+   StartDate,
+   GroupID;
+
+  field ( readonly )
+   LastChanged,
+   LocalLastChanged;
+
+  field ( readonly : update )
+   CompanyCode,
+   FinView,
+   Area,
+   BusinessArea,
+   CuID,
+   StartDate,
+   GroupID;
+
+
+  create;
+  update;
+  delete;
+
+  draft action Edit;
+  draft action Activate;
+  draft action Discard;
+  draft action Resume;
+  draft determine action Prepare;
+
+  mapping for ZETC_CU_FG
+  {
+    CompanyCode = COMPANY_CODE;
+    FinView = FIN_VIEW;
+    Area = AREA;
+    BusinessArea = BUSINESS_AREA;
+    CuID = CU_ID;
+    StartDate = START_DATE;
+    GroupID = GROUP_ID;
+    Percentage = PERCENTAGE;
+    LocalLastChanged = LOCAL_LAST_CHANGED;
+    LastChanged = LAST_CHANGED;
+  }
+}

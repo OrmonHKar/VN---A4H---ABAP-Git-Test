@@ -1,0 +1,4 @@
+@EndUserText.label: 'Service definition forZE_C_PPM_OBJ'
+define service ZE_SD_PPM_OBJ {
+  expose ZE_C_PPM_OBJ as PPMObj;
+}

@@ -1,0 +1,4 @@
+@EndUserText.label: 'Service definition forZE_C_CATEGORY'
+define service ZE_SD_CATEGORY {
+  expose ZE_C_CATEGORY as Category;
+}

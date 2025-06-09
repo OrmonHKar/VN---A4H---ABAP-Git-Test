@@ -1,0 +1,56 @@
+managed implementation in class ZCL_E_BP_CU_DEF unique;
+strict ( 1 );
+with draft;
+
+define behavior for ZE_I_CU_DEF alias CUDef
+persistent table zetc_cu_def
+draft table ZETC_CU_DEF_DR
+etag master LocalLastChanged
+lock master total etag LastChanged
+authorization master( global )
+
+{
+  field ( mandatory : create )
+   CompanyCode,
+   CuID;
+
+  field ( readonly )
+   LastChanged,
+   LocalLastChanged;
+
+  field ( readonly : update )
+   CompanyCode,
+   CuID;
+
+
+  create;
+  update;
+  delete;
+
+  draft action Edit;
+  draft action Activate;
+  draft action Discard;
+  draft action Resume;
+  draft determine action Prepare;
+
+  mapping for ZETC_CU_DEF
+  {
+    CompanyCode = COMPANY_CODE;
+    CuID = CU_ID;
+    Unit = UNIT;
+    Type = TYPE;
+    PriceUnit = price_unit;
+    Currency = currency;
+    Ttype = TTYPE;
+    Voltage = VOLTAGE;
+    ActionCu = ACTION_CU;
+    DistrLogic = DISTR_LOGIC;
+    ZespecialFunction = ZESPECIAL_FUNCTION;
+    Zinactive = ZINACTIVE;
+    ZcuSubstitute = ZCU_SUBSTITUTE;
+    ZcuTemplate = ZCU_TEMPLATE;
+    LocalLastChanged = LOCAL_LAST_CHANGED;
+    LastChanged = LAST_CHANGED;
+    CUDesc = cu_desc;
+  }
+}

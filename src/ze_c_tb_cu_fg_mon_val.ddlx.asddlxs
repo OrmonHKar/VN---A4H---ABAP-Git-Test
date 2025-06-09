@@ -1,0 +1,65 @@
+@Metadata.layer: #CORE
+
+@UI: {
+  headerInfo: { typeName: 'CU Financial Group Monetary value',
+                typeNamePlural: 'CUs Financial Groups Monetary values',
+                title: { type: #STANDARD, label: 'Direct financial group planning values', value: '_CU_FG.GroupId' } },
+  presentationVariant: [{ sortOrder: [{ by: 'Fyear',  direction:  #ASC }] }, { sortOrder: [{ by: 'Period',  direction:  #ASC }] } ] }
+
+
+annotate entity ZE_C_TB_CU_FG_MON_VAL
+    with 
+{
+@UI.facet: [ { id:            'CUFGBasMonVal',
+                   purpose:     #STANDARD,
+                   type:        #IDENTIFICATION_REFERENCE,
+                   label:       'Financial groups monetary values',
+                   position:    10 }
+             ]
+             
+@UI.hidden: true
+    PlnHdrGuid;
+    
+    @UI.hidden: true
+    SrcPlnHdrGuid;
+    
+    @UI.hidden: true
+    Guid;
+    
+    @UI: {  lineItem:       [ { position: 10 } ],
+          identification: [ { position: 10 } ],
+          selectionField: [ { position: 10 } ] }  
+    Fyear;
+    
+    @UI: {  lineItem:       [ { position: 20 } ],
+          identification: [ { position: 20 } ],
+          selectionField: [ { position: 20 } ] }  
+    Period;
+    
+    @UI: {  lineItem:       [ { position: 30 } ],
+          identification: [ { position: 30 } ],
+          selectionField: [ { position: 30 } ] }  
+    Amount;
+    
+    @UI.hidden: true
+    ParentGuid;
+    
+    @UI.hidden: true
+    CreatedBy;
+    
+    @UI.hidden: true
+    CreatedAt;
+    
+    @UI.hidden: true
+    LastChangedBy;
+    
+    @UI.hidden: true
+    LastChangedAt;
+    
+    @UI.hidden: true
+    LocalLastChangedAt;
+    
+    @UI.hidden: true
+    Currency;
+    
+}

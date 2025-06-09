@@ -1,0 +1,4 @@
+@EndUserText.label: 'Service definition forZE_C_CU_RU_C'
+define service ZE_SD_CU_RU_C {
+  expose ZE_C_CU_RU_C as CURUC;
+}

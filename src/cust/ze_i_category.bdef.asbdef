@@ -1,0 +1,43 @@
+managed implementation in class ZCL_E_BP_CATEGORY unique;
+strict ( 1 );
+with draft;
+
+define behavior for ZE_I_CATEGORY alias Category
+persistent table zetc_category
+draft table ZETC_CATEGORY_DR
+etag master LocalLastChanged
+lock master total etag LastChanged
+authorization master( global )
+
+{
+  field ( mandatory : create )
+   Category;
+
+  field ( readonly )
+   LastChanged,
+   LocalLastChanged;
+
+  field ( readonly : update )
+   Category;
+
+
+  create;
+  update;
+  delete;
+
+  draft action Edit;
+  draft action Activate;
+  draft action Discard;
+  draft action Resume;
+  draft determine action Prepare;
+
+  mapping for ZETC_CATEGORY
+  {
+    Category = CATEGORY;
+    langu = langu;
+    Text = TEXT;
+    Textc = TEXTC;
+    LocalLastChanged = LOCAL_LAST_CHANGED;
+    LastChanged = LAST_CHANGED;
+  }
+}

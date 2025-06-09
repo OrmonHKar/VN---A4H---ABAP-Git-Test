@@ -1,0 +1,705 @@
+managed;
+with draft;
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//           Cabecera del plan - Tanto para planificación en CU/RU como en FG Bas                                 //
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+define behavior for ZE_I_TB_PLN_HDR alias Plan_Header
+implementation in class zbp_e_i_tb_pln_hdr unique
+draft table zetb_pln_hdr_dr
+persistent table zetb_pln_hdr
+lock master
+total etag LocalLastChangedAt
+authorization master ( instance )
+etag master LocalLastChangedAt
+
+{
+  create;
+  update;
+  delete;
+
+  // Asociaciones
+  association _Add { create ( features : instance ); with draft; }
+  association _FGBas { create ( features : instance ); with draft; }
+  association _InstCu { create ( features : instance ); with draft; }
+  association _InstRu { create ( features : instance ); with draft; }
+  association _Attachments { create ( features : instance ); with draft; }
+
+  // Control de campos
+  field ( numbering : managed, readonly ) PlnHdrGuid;
+  field ( readonly ) PlngType;
+  field ( mandatory ) ObjId, Obtyp, Anlue, Area, BusinessArea, CompanyCode, Category, Currency, StartDate, EndDate, FinView, Periv;
+
+  // Determinaciones
+  determination setInitialData on modify { create; }
+  determination setDefaultInstCu on modify { create; }
+
+  // Validaciones
+  validation validateMandatory on save { create; update; }
+  validation validateDates on save { field StartDate, EndDate; create; update; }
+
+  draft action Resume;
+  draft action Edit;
+  draft action Activate;
+  draft action Discard;
+
+  draft determine action Prepare
+  {
+    validation ( always ) validateMandatory;
+    validation ( always ) validateDates;
+  }
+
+  //Factory action
+//  factory action copyHdr [1];
+  factory action copyHdr parameter ZE_I_TB_FINVIEW_PARAMETER [1];
+
+  // Acciones
+  action getTotals result [1..*] ZE_I_TB_CALCULATEAMOUNT;
+
+  // Mapeo de tabla
+  mapping for zetb_pln_hdr
+  {
+    Anlue = anlue;
+    Area = area;
+    BusinessArea = business_area;
+    Category = category;
+    CommInstallId = comm_install_id;
+    CompanyCode = Company_Code;
+    CreatedAt = Created_At;
+    CreatedBy = Created_By;
+    Currency = Currency;
+    EndDate = End_Date;
+    FinView = Fin_View;
+    HasCu = Has_Cu;
+    HasFg = Has_Fg;
+    HasManualCi = Has_Manual_Ci;
+    HasRu = Has_Ru;
+    IsRollup = Is_Rollup;
+    LastChangedAt = Last_Changed_At;
+    LastChangedBy = Last_Changed_By;
+    LocalLastChangedAt = Local_Last_Changed_At;
+    ObjId = Obj_id;
+    Obtyp = Obtyp;
+    PlnHdrGuid = pln_hdr_guid;
+    Periodtype = Periodtype;
+    Periv = Periv;
+    PfGuid = Pf_Guid;
+    PlngType = Plng_Type;
+    StartDate = Start_Date;
+  }
+
+}
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                          Datos adicionales - Customer y regulatory income                                      //
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+define behavior for ZE_I_TB_ADD alias Add
+implementation in class zbp_e_i_tb_add unique
+draft table zetb_add_dr
+persistent table zetb_add
+lock dependent by _PlnHdr
+authorization dependent by _PlnHdr
+etag master LocalLastChangedAt
+{
+  update;
+  delete;
+  field ( readonly ) PlnHdrGuid;
+
+  // Asociaciones
+  association _PlnHdr;
+  association _ADD_MON_VAL { create; }
+
+  // Control de campos
+  field ( numbering : managed, readonly ) Guid;
+  field ( readonly ) SrcPlnHdrGuid;
+
+  // Mapeo de tabla
+  mapping for zetb_add
+  {
+    CreatedAt = created_at;
+    CreatedBy = created_by;
+    GroupId = group_id;
+    Guid = guid;
+    LastChangedAt = Last_Changed_At;
+    LastChangedBy = Last_Changed_By;
+    LocalLastChangedAt = Local_Last_Changed_At;
+    ParentGuid = parent_guid;
+    PlnHdrGuid = pln_hdr_guid;
+    SrcPlnHdrGuid = src_pln_hdr_guid;
+    ValueType = value_type;
+  }
+}
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                     Datos adicionales - Importes de Customer y regulatory income                               //
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+define behavior for ZE_I_TB_ADD_MON_VAL alias AddMonVal
+draft table zetbaddmonvaldr
+persistent table zetb_mon_val
+lock dependent by _PlnHdr
+authorization dependent by _PlnHdr
+etag master LocalLastChangedAt
+{
+  update;
+  delete;
+
+  // Asociaciones
+  association _Add;
+  association _PlnHdr;
+
+  // Control de campos
+  field ( readonly ) PlnHdrGuid, SrcPlnHdrGuid, ParentGuid;
+  field ( numbering : managed, readonly ) Guid;
+
+  // Mapeo de tabla
+  mapping for zetb_mon_val
+  {
+    Amount = amount;
+    CreatedAt = created_at;
+    CreatedBy = created_by;
+    Fyear = fyear;
+    Guid = guid;
+    ParentGuid = parent_guid;
+    Period = period;
+    PlnHdrGuid = pln_hdr_guid;
+    SrcPlnHdrGuid = src_pln_hdr_guid;
+    LastChangedAt = Last_Changed_At;
+    LastChangedBy = Last_Changed_By;
+    LocalLastChangedAt = Local_Last_Changed_At;
+  }
+
+}
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                            Planificación en FG básicos - Datos de cabecera de FG                               //
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+define behavior for ZE_I_TB_FG_BAS alias FG_BAS
+implementation in class zbp_e_i_tb_fg_bas unique
+draft table zetb_fg_bas_dr
+persistent table zetb_fg_bas
+lock dependent by _PlnHdr
+authorization dependent by _PlnHdr
+etag master LocalLastChangedAt
+{
+  update;
+  delete;
+
+  // Asociaciones
+  association _PlnHdr { with draft; }
+//  association _FG_BAS_MON_VAL { create; with draft; }
+  association _FG_BAS_MON_VAL { internal create; with draft; }
+
+  // Control de campos
+  field ( readonly ) PlnHdrGuid;
+  field ( numbering : managed, readonly ) Guid;
+  field ( mandatory ) InitialDate, CommissionedDate, DistrLogic, GroupId;
+
+  // Acciones
+  action calculateMonVal result [1] $self;
+  action deleteMonVal result [1] $self;
+
+  // Determinaciones
+  determination setInitialFGBasData on modify { create; }
+  //  determination calculateFGBasAmountDistr on modify { field InitialDate, CommissionedDate, TotalAmount; }
+
+  // Validaciones
+  validation validateMandatory on save { create; update; }
+  validation validateGroupId on save { field GroupId; create; update; }
+  validation validateDates on save { field InitialDate, CommissionedDate; create; update; }
+  validation validateTradingPartner on save { field TradingPartner; create; update; }
+
+  // Mapeo a la tabla
+  mapping for zetb_fg_bas
+  {
+    Comments = comments;
+    CommissionedDate = commissioned_date;
+    CreatedAt = created_at;
+    CreatedBy = created_by;
+    DistrLogic = distr_logic;
+    TotalAmount = total_amount;
+    GroupId = group_id;
+    Guid = guid;
+    InitialDate = initial_date;
+    Logsys = logsys;
+    PlnHdrGuid = pln_hdr_guid;
+    SrcPlnHdrGuid = src_pln_hdr_guid;
+    TradingPartner = trading_partner;
+    LastChangedAt = Last_Changed_At;
+    LastChangedBy = Last_Changed_By;
+    LocalLastChangedAt = Local_Last_Changed_At;
+  }
+
+}
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                 Planificación en FG básicos - Importes de FG                                   //
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+define behavior for ZE_I_TB_FG_BAS_MON_VAL alias FGBasMonVal
+draft table zetb_fgmonvaldr
+persistent table zetb_mon_val
+lock dependent by _PlnHdr
+authorization dependent by _PlnHdr
+etag master LocalLastChangedAt
+{
+  //  update;
+  delete;
+
+  // Asociaciones
+  association _FG_BAS { with draft; }
+  association _PlnHdr { with draft; }
+
+  // Control de campos
+  field ( readonly ) PlnHdrGuid, SrcPlnHdrGuid, ParentGuid;
+  field ( numbering : managed, readonly ) Guid;
+
+  // Mapeo a la tabla
+  mapping for zetb_mon_val
+  {
+    Amount = amount;
+    CreatedAt = created_at;
+    CreatedBy = created_by;
+    Fyear = fyear;
+    Guid = guid;
+    ParentGuid = parent_guid;
+    Period = period;
+    PlnHdrGuid = pln_hdr_guid;
+    SrcPlnHdrGuid = src_pln_hdr_guid;
+    LastChangedAt = Last_Changed_At;
+    LastChangedBy = Last_Changed_By;
+    LocalLastChangedAt = Local_Last_Changed_At;
+  }
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                 Instalaciones de unidades constructivas                                        //
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+define behavior for ZE_I_TB_INST_CU alias InstCU
+implementation in class zbp_e_i_tb_inst_cu unique
+draft table zetb_inst_cu_dr
+persistent table zetb_inst_cu
+lock dependent by _PlnHdr
+authorization dependent by _PlnHdr
+etag master LocalLastChangedAt
+{
+  update;
+  delete;
+
+  // Asociaciones
+  association _PlnHdr { with draft; }
+  //association _CU { create; }
+  association _CU { create ( features : instance ); with draft; }
+
+  // Control de campos
+  field ( readonly ) PlnHdrGuid;
+  field ( numbering : managed, readonly ) Guid;
+
+  determination setInitialHDRData on modify { create; }
+
+  // Mapeo a la tabla
+  mapping for zetb_inst_cu
+  {
+    CreatedAt = created_at;
+    CreatedBy = created_by;
+    Guid = guid;
+    InstallationId = installation_id;
+    PlnHdrGuid = pln_hdr_guid;
+    SrcPlnHdrGuid = src_pln_hdr_guid;
+    LastChangedAt = Last_Changed_At;
+    LastChangedBy = Last_Changed_By;
+    LocalLastChangedAt = Local_Last_Changed_At;
+  }
+
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                 Cabecera de unidades constructivas                                             //
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+define behavior for ZE_I_TB_CU alias CU
+implementation in class zbp_e_i_tb_cu unique
+draft table zetb_cu_bas_dr
+persistent table zetb_cu_bas
+lock dependent by _PlnHdr
+authorization dependent by _PlnHdr
+etag master LocalLastChangedAt
+{
+  update;
+  delete;
+
+  // Asociaciones
+  association _InstCU { with draft; }
+  association _CU_FG {  create ( features : instance ); with draft;  }
+  association _CU_RU_MAP { create ( features : instance ); with draft; }
+  association _PlnHdr { with draft; }
+
+  // Control de campos
+  field ( readonly ) ParentGuid, PlnHdrGuid, SrcPlnHdrGuid, TotalAmount, Currency;
+  field ( numbering : managed, readonly ) Guid;
+
+  action calculateCUMonVal result [1] $self;
+  //factory action copyHdr [1];
+
+  determination setInitialCUData on modify { create; }
+  determination calculateTotalPrice on modify { create; field Quantity, CuId; }
+
+  // Mapeo a la tabla
+  mapping for zetb_cu_bas
+  {
+    Comments = comments;
+    CommissionedDate = commissioned_date;
+    CuId = cu_id;
+    DistrLogic = distr_logic;
+    InitialDate = initial_date;
+    IsUnitCostManual = is_unit_cost_manual;
+    ManualQuantityMaintained = manual_quantity_maintained;
+    Quantity = quantity;
+    Unit = unit;
+    TotalAmount = total_amount;
+    TradingPartner = trading_partner;
+    CreatedAt = created_at;
+    CreatedBy = created_by;
+    Guid = guid;
+    ParentGuid = parent_guid;
+    PlnHdrGuid = pln_hdr_guid;
+    SrcPlnHdrGuid = src_pln_hdr_guid;
+    LastChangedAt = Last_Changed_At;
+    LastChangedBy = Last_Changed_By;
+    LocalLastChangedAt = Local_Last_Changed_At;
+  }
+
+}
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                 Grupos financieros de unidades constructivas                                   //
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+define behavior for ZE_I_TB_CU_FG alias CUFG
+implementation in class zbp_e_i_tb_cu_fg unique
+draft table zetb_cu_fg_dr
+persistent table zetb_cu_fg
+lock dependent by _PlnHdr
+authorization dependent by _PlnHdr
+etag master LocalLastChangedAt
+{
+  update;
+  delete;
+
+  // Asociaciones
+  association _CU { with draft; }
+  association _PlnHdr { with draft; }
+  //association _CU_FG_MON_VAL { create; }
+  association _CU_FG_MON_VAL { create ( features : instance ); with draft; }
+
+  // Control de campos
+  field ( readonly ) PlnHdrGuid, SrcPlnHdrGuid, ParentGuid;
+  field ( numbering : managed, readonly ) Guid;
+
+  // Mapeo a la tabla
+  mapping for zetb_cu_fg
+  {
+    Comments = comments;
+    GroupId = group_id;
+    TotalAmount = total_amount;
+    Logsys = logsys;
+    TradingPartner = trading_partner;
+    CreatedAt = created_at;
+    CreatedBy = created_by;
+    Guid = guid;
+    ParentGuid = parent_guid;
+    PlnHdrGuid = pln_hdr_guid;
+    SrcPlnHdrGuid = src_pln_hdr_guid;
+    LastChangedAt = Last_Changed_At;
+    LastChangedBy = Last_Changed_By;
+    LocalLastChangedAt = Local_Last_Changed_At;
+  }
+
+}
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                             Importes de grupos financieros de unidades constructivas                           //
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+define behavior for ZE_I_TB_CU_FG_MON_VAL alias CUFGMonVal
+persistent table zetb_mon_val
+draft table zetbcufgmonvaldr
+lock dependent by _PlnHdr
+authorization dependent by _PlnHdr
+etag master LocalLastChangedAt
+{
+  update;
+  delete;
+
+  // Asociaciones
+  association _CU_FG { with draft; }
+  association _PlnHdr { with draft; }
+
+  // Control de campos
+  field ( readonly ) PlnHdrGuid, SrcPlnHdrGuid, ParentGuid;
+  field ( numbering : managed, readonly ) Guid;
+
+  // Mapeo a la tabla
+  mapping for zetb_mon_val
+  {
+    Amount = amount;
+    CreatedAt = created_at;
+    CreatedBy = created_by;
+    Fyear = fyear;
+    Guid = guid;
+    ParentGuid = parent_guid;
+    Period = period;
+    PlnHdrGuid = pln_hdr_guid;
+    SrcPlnHdrGuid = src_pln_hdr_guid;
+    LastChangedAt = Last_Changed_At;
+    LastChangedBy = Last_Changed_By;
+    LocalLastChangedAt = Local_Last_Changed_At;
+  }
+}
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                 Mapeo entre unidades constructivas y regulatorias                              //
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+define behavior for ZE_I_TB_CU_RU_MAP alias CURUMap
+persistent table zetb_cu_ru
+draft table zetb_cu_ru_dr
+lock dependent by _PlnHdr
+authorization dependent by _PlnHdr
+etag master LocalLastChangedAt
+{
+  update;
+  delete;
+
+  // Asociaciones
+  association _CU;
+  association _PlnHdr;
+
+  // Control de campos
+  field ( readonly ) PlnHdrGuid, SrcPlnHdrGuid, ParentGuid;
+  field ( numbering : managed, readonly ) Guid;
+
+  // Mapeo a la tabla
+  mapping for zetb_cu_ru
+  {
+    CostTransferRate = cost_transfer_rate;
+    TrgRuBasGuid = trg_ru_bas_guid;
+    TrgRuId = trg_ru_id;
+    UnitTransferRate = unit_transfer_rate;
+    CreatedAt = created_at;
+    CreatedBy = created_by;
+    Guid = guid;
+    ParentGuid = parent_guid;
+    PlnHdrGuid = pln_hdr_guid;
+    SrcPlnHdrGuid = src_pln_hdr_guid;
+    LastChangedAt = Last_Changed_At;
+    LastChangedBy = Last_Changed_By;
+    LocalLastChangedAt = Local_Last_Changed_At;
+  }
+
+}
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                 Instalaciones de unidades regulatorias                                         //
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+define behavior for ZE_I_TB_INST_RU alias InstRU
+implementation in class zbp_e_i_tb_inst_ru unique
+draft table zetb_inst_ru_dr
+persistent table zetb_inst_ru
+lock dependent by _PlnHdr
+authorization dependent by _PlnHdr
+etag master LocalLastChangedAt
+{
+  update;
+  delete;
+
+  // Asociaciones
+  association _PlnHdr;
+  association _RU { create; }
+
+  // Control de campos
+  field ( readonly ) PlnHdrGuid;
+  field ( numbering : managed, readonly ) Guid;
+
+  // Mapeo a la tabla
+  mapping for zetb_inst_ru
+  {
+    CreatedAt = created_at;
+    CreatedBy = created_by;
+    Guid = guid;
+    InstallationId = installation_id;
+    PlnHdrGuid = pln_hdr_guid;
+    SrcPlnHdrGuid = src_pln_hdr_guid;
+    LastChangedAt = Last_Changed_At;
+    LastChangedBy = Last_Changed_By;
+    LocalLastChangedAt = Local_Last_Changed_At;
+  }
+}
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                 Cabecera de unidades regulatorias                                              //
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+define behavior for ZE_I_TB_RU alias RU
+implementation in class zbp_e_i_tb_ru unique
+draft table zetb_ru_bas_dr
+persistent table zetb_ru_bas
+lock dependent by _PlnHdr
+authorization dependent by _PlnHdr
+etag master LocalLastChangedAt
+{
+  update;
+  delete;
+
+  // Asociaciones
+  association _InstRU;
+  association _PlnHdr;
+  association _RU_FG { create; }
+
+  // Control de campos
+  field ( readonly ) ParentGuid, PlnHdrGuid, SrcPlnHdrGuid;
+  field ( numbering : managed, readonly ) Guid;
+
+  // Mapeo a la tabla
+  mapping for zetb_ru_bas
+  {
+    Comments = comments;
+    CommissionedDate = commissioned_date;
+    IsQuanManual = is_quan_manual;
+    ManualQuantity = manual_quantity;
+    Quantity = quantity;
+    RuId = ru_id;
+    TradingPartner = trading_partner;
+    Unit = unit;
+    CreatedAt = created_at;
+    CreatedBy = created_by;
+    Guid = guid;
+    ParentGuid = parent_guid;
+    PlnHdrGuid = pln_hdr_guid;
+    SrcPlnHdrGuid = src_pln_hdr_guid;
+    LastChangedAt = Last_Changed_At;
+    LastChangedBy = Last_Changed_By;
+    LocalLastChangedAt = Local_Last_Changed_At;
+  }
+}
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                 Grupos financieros de unidades regulatorias                                    //
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+define behavior for ZE_I_TB_RU_FG alias RUFG
+implementation in class zbp_e_i_tb_ru_fg unique
+draft table zetb_ru_fg_dr
+persistent table zetb_ru_fg
+lock dependent by _PlnHdr
+authorization dependent by _PlnHdr
+etag master LocalLastChangedAt
+{
+  update;
+  delete;
+
+  // Asociaciones
+  association _RU;
+  association _PlnHdr;
+  association _RU_FG_MON_VAL { create; }
+
+  // Control de campos
+  field ( readonly ) PlnHdrGuid, SrcPlnHdrGuid, ParentGuid;
+  field ( numbering : managed, readonly ) Guid;
+
+  // Mapeo a la tabla
+  mapping for zetb_ru_fg
+  {
+    Comments = comments;
+    GroupId = group_id;
+    Logsys = logsys;
+    TradingPartner = trading_partner;
+    CreatedAt = created_at;
+    CreatedBy = created_by;
+    Guid = guid;
+    ParentGuid = parent_guid;
+    PlnHdrGuid = pln_hdr_guid;
+    SrcPlnHdrGuid = src_pln_hdr_guid;
+    LastChangedAt = Last_Changed_At;
+    LastChangedBy = Last_Changed_By;
+    LocalLastChangedAt = Local_Last_Changed_At;
+  }
+
+}
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                            Importes de grupos financieros de unidades regulatorias                             //
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+define behavior for ZE_I_TB_RU_FG_MON_VAL alias RUFGMonVal
+persistent table zetb_mon_val
+draft table zetb_rufgonvaldr
+lock dependent by _PlnHdr
+authorization dependent by _PlnHdr
+etag master LocalLastChangedAt
+{
+  update;
+  delete;
+
+  // Asociaciones
+  association _RU_FG;
+  association _PlnHdr;
+
+  // Control de campos
+  field ( readonly ) PlnHdrGuid, SrcPlnHdrGuid, ParentGuid;
+  field ( numbering : managed, readonly ) Guid;
+
+  // Mapeo a la tabla
+  mapping for zetb_mon_val
+  {
+    Amount = amount;
+    CreatedAt = created_at;
+    CreatedBy = created_by;
+    Fyear = fyear;
+    Guid = guid;
+    ParentGuid = parent_guid;
+    Period = period;
+    PlnHdrGuid = pln_hdr_guid;
+    SrcPlnHdrGuid = src_pln_hdr_guid;
+    LastChangedAt = Last_Changed_At;
+    LastChangedBy = Last_Changed_By;
+    LocalLastChangedAt = Local_Last_Changed_At;
+  }
+}
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                  Anexos                                                        //
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+define behavior for ZE_I_TB_PLN_ATT alias Attachments
+persistent table zetb_pln_att
+draft table zetb_pln_att_dr
+lock dependent by _PlnHdr
+authorization dependent by _PlnHdr
+etag master LocalLastChangedAt
+{
+  update;
+  delete;
+
+  // Asociaciones
+  association _PlnHdr { with draft; }
+
+  // Control de campos
+  field ( readonly ) PlnHdrGuid;
+  field ( numbering : managed, readonly ) AttGuid;
+
+  // Mapeo a la tabla
+  mapping for zetb_pln_att
+  {
+    PlnHdrGuid = pln_hdr_guid;
+    AttGuid = att_guid;
+    Comments = comments;
+    Attachment = attachment;
+    Mimetype = mimetype;
+    Filename = filename;
+  }
+}

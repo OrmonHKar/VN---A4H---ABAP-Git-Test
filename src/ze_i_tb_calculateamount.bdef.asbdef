@@ -1,0 +1,11 @@
+abstract;
+//strict ( 1 );
+
+define behavior for ZE_I_TB_CALCULATEAMOUNT alias calculate
+{
+    create;
+    update;
+
+    field ( mandatory : create ) amount;
+    field ( mandatory : create ) fyear;
+}

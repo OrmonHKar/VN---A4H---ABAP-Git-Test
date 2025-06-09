@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_MSAG" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <T100A>
+    <ARBGB>ZE_PPM</ARBGB>
+    <MASTERLANG>E</MASTERLANG>
+    <STEXT>Clase de mensajes de PPM</STEXT>
+   </T100A>
+   <T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZE_PPM</ARBGB>
+     <MSGNR>001</MSGNR>
+     <TEXT>FG dates, &amp;1 - &amp;2, must be between plan header dates, &amp;3 - &amp;4</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZE_PPM</ARBGB>
+     <MSGNR>002</MSGNR>
+     <TEXT>FG date range, &amp;1 - &amp;2, is not valid</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZE_PPM</ARBGB>
+     <MSGNR>003</MSGNR>
+     <TEXT>Trading partner &amp;1 is not valid</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZE_PPM</ARBGB>
+     <MSGNR>004</MSGNR>
+     <TEXT>Financial group &amp;1 is not valid</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZE_PPM</ARBGB>
+     <MSGNR>005</MSGNR>
+     <TEXT>Plan header date range, &amp;1 - &amp;2, is not valid</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZE_PPM</ARBGB>
+     <MSGNR>006</MSGNR>
+     <TEXT>FG &amp;1 with dates &amp;2 - &amp;3 would not be valid with new plan header dates</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZE_PPM</ARBGB>
+     <MSGNR>007</MSGNR>
+     <TEXT>Field &amp;1 is mandatory</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZE_PPM</ARBGB>
+     <MSGNR>008</MSGNR>
+     <TEXT>Default installationsID is selected</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZE_PPM</ARBGB>
+     <MSGNR>009</MSGNR>
+     <TEXT>Compnay code &amp;1 is not valid</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZE_PPM</ARBGB>
+     <MSGNR>999</MSGNR>
+     <TEXT>&amp;1 &amp;2 &amp;3 &amp;4</TEXT>
+    </T100>
+   </T100>
+  </asx:values>
+ </asx:abap>
+</abapGit>

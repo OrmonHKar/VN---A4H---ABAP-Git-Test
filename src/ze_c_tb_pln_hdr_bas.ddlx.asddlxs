@@ -1,0 +1,147 @@
+@Metadata.layer: #CORE
+
+@UI: {
+  headerInfo: { typeName: 'Financial planning header',
+                typeNamePlural: 'Financial planning headers',
+                title: { type: #STANDARD, label: 'Financial planning header', value: 'PlnHdrGuid' } },
+  presentationVariant: [{ sortOrder: [{ by: 'PlnHdrGuid', direction:  #DESC }] }] }
+annotate entity ZE_C_TB_PLN_HDR_BAS with
+{
+  @UI.facet: [ { id:              'PlnHdrGuid',
+                 purpose:         #STANDARD,
+                 type:            #IDENTIFICATION_REFERENCE,
+                 label:           'Financial planning header data',
+                 position:        10 },                         
+               { id:              'FGBas',
+                 purpose:         #STANDARD,
+                 type:            #LINEITEM_REFERENCE,
+                 label:           'Financial groups',
+                 position:        20,
+                 targetElement:   '_FGBas'},
+               { id:              'Attachments',
+                 purpose:         #STANDARD,
+                 type:            #LINEITEM_REFERENCE,
+                 label:           'Attachments',
+                 position:        30,
+                 targetElement:   '_Attachments'}
+             ]
+
+  @UI.hidden: true
+  @UI:{ identification: [{ position: 1, label: 'Fin. Plan GUID' }] }
+  PlnHdrGuid;
+
+  @Consumption.valueHelpDefinition: [{ entity: { name: 'ZE_I_PPM_OBJ', element: 'ObjectID'}, useForValidation: true }]
+  @UI: {  lineItem:       [ { position: 10 }, { type: #FOR_ACTION, dataAction: 'copyHdr', label: 'Copy', hidden: false } ],
+          identification: [ { position: 10 }, { type: #FOR_ACTION, dataAction: 'copyHdr', label: 'Copy', hidden: false } ],
+          selectionField: [ { position: 10 } ] }
+  ObjId;
+
+  @Consumption.valueHelpDefinition: [{ entity: { name: 'ZE_I_TD_FIN_VIEW', element: 'value_low'}, useForValidation: true }]
+  @UI: {  lineItem:       [ { position: 20 } ],
+          identification: [ { position: 20 } ],
+          selectionField: [ { position: 20 } ] }
+  FinView;
+
+  @Consumption.filter.defaultValue: 'FG'
+  @UI: {  lineItem:       [ { position: 30 } ],
+          identification: [ { position: 30 } ] }
+  PlngType;
+
+  @UI.hidden: true
+  HasCu;
+
+  @UI.hidden: true
+  HasRu;
+
+  @UI.hidden: true
+  HasFg;
+
+  @UI.hidden: true
+  HasManualCi;
+
+  @UI.hidden: true
+  IsRollup;
+
+  @Consumption.valueHelpDefinition: [{ entity: { name: 'ZE_I_TD_PERIOD_TYPE', element: 'value_low'}, useForValidation: true }]
+  @UI: {  lineItem:       [ { position: 40 } ],
+          identification: [ { position: 40 } ] }
+  Periv;
+
+  @Consumption.valueHelpDefinition: [{ entity: { name: 'ZE_I_TD_PPB_OBJ_TYPE', element: 'value_low'}, useForValidation: true }]
+  @UI: {  lineItem:       [ { position: 50 } ],
+          identification: [ { position: 50 } ] }
+  Obtyp;
+
+  @UI: {  lineItem:       [ { position: 60 } ],
+          identification: [ { position: 60 } ],
+          selectionField: [ { position: 60 } ] }
+  StartDate;
+
+  @UI: {  lineItem:       [ { position: 70 } ],
+          identification: [ { position: 70 } ],
+          selectionField: [ { position: 70 } ] }
+  EndDate;
+
+  @Consumption.valueHelpDefinition: [{ entity: { name: 'I_Currency', element: 'Currency'} }]
+  @UI: {  lineItem:       [ { position: 80 } ],
+          identification: [ { position: 80 } ],
+          selectionField: [ { position: 80 } ] }
+  Currency;
+
+  @Consumption.valueHelpDefinition: [{ entity: { name: 'ZE_I_T001', element: 'Bukrs'}, useForValidation: true }]
+
+  @UI: {  lineItem:       [ { position: 90 } ],
+          identification: [ { position: 90 } ],
+          selectionField: [ { position: 90 } ] }
+  CompanyCode;
+
+
+  @UI: {  lineItem:       [ { position: 100 } ],
+          identification: [ { position: 100 } ],
+          selectionField: [ { position: 100 } ] }
+  BusinessArea;
+
+  @UI: {  lineItem:       [ { position: 110 } ],
+          identification: [ { position: 110 } ],
+          selectionField: [ { position: 110 } ] }
+  Area;
+
+  @Consumption.valueHelpDefinition: [{ entity: { name: 'ZE_I_CATEGORY', element: 'Category'}, useForValidation: true }]
+  @UI: {  lineItem:       [ { position: 120 } ],
+          identification: [ { position: 120 } ],
+          selectionField: [ { position: 120 } ] }
+  Category;
+
+  @Consumption.valueHelpDefinition: [{ entity: { name: 'ZE_I_T087U', element: 'Anlue'}, useForValidation: true }]
+  @UI: {  lineItem:       [ { position: 130 } ],
+          identification: [ { position: 130 } ],
+          selectionField: [ { position: 130 } ] }
+  Anlue;
+
+  @UI.hidden: true
+  PfGuid;
+
+  @Consumption.valueHelpDefinition: [{ entity: { name: 'ZE_I_TD_PERIOD_TYPE', element: 'value_low'}, useForValidation: true }]
+  @UI: {  lineItem:       [ { position: 140 } ],
+          identification: [ { position: 140 } ] }
+  Periodtype;
+
+  @UI.hidden: true
+  CommInstallId;
+
+  @UI.hidden: true
+  CreatedBy;
+
+  @UI.hidden: true
+  CreatedAt;
+
+  @UI.hidden: true
+  LastChangedBy;
+
+  @UI.hidden: true
+  LastChangedAt;
+
+  @UI.hidden: true
+  LocalLastChangedAt;
+
+}

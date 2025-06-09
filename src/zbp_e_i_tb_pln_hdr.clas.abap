@@ -1,0 +1,5 @@
+CLASS zbp_e_i_tb_pln_hdr DEFINITION PUBLIC ABSTRACT FINAL FOR BEHAVIOR OF ze_i_tb_pln_hdr.
+ENDCLASS.
+
+CLASS zbp_e_i_tb_pln_hdr IMPLEMENTATION.
+ENDCLASS.

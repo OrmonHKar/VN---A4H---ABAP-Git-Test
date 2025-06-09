@@ -1,0 +1,41 @@
+managed implementation in class ZCL_E_BP_T087U unique;
+strict ( 1 );
+with draft;
+
+define behavior for ZE_I_T087U alias Installation
+persistent table zetc_t087u
+draft table ZETC_t087U_DR
+etag master LocalLastChanged
+lock master total etag LastChanged
+authorization master( global )
+
+{
+  field ( mandatory : create )
+   Anlue;
+
+  field ( readonly )
+   LastChanged,
+   LocalLastChanged;
+
+  field ( readonly : update )
+   Anlue;
+
+
+  create;
+  update;
+  delete;
+
+  draft action Edit;
+  draft action Activate;
+  draft action Discard;
+  draft action Resume;
+  draft determine action Prepare;
+
+  mapping for ZETC_T087U
+  {
+    Anlue = ANLUE;
+    AnlueTxt = ANLUE_TXT;
+    LocalLastChanged = LOCAL_LAST_CHANGED;
+    LastChanged = LAST_CHANGED;
+  }
+}

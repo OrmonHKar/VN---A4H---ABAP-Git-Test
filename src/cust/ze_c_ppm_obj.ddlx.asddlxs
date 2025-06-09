@@ -1,0 +1,51 @@
+@Metadata.layer: #CORE
+@UI: {
+  headerInfo: {
+    typeName: 'PPMObj', 
+    typeNamePlural: 'PPMObjs'
+  }
+}
+annotate view ZE_C_PPM_OBJ with
+{
+  @UI.facet: [ {
+    id: 'idIdentification', 
+    type: #IDENTIFICATION_REFERENCE, 
+    label: 'PPMObj', 
+    position: 10 
+  } ]
+  @UI.lineItem: [ {
+    position: 10 , 
+    importance: #MEDIUM, 
+    label: ''
+  } ]
+  @UI.identification: [ {
+    position: 10 , 
+    label: ''
+  } ]
+  objectId;
+  
+  @UI.lineItem: [ {
+    position: 20 , 
+    importance: #MEDIUM, 
+    label: ''
+  } ]
+  @UI.identification: [ {
+    position: 20 , 
+    label: ''
+  } ]
+  objectType;
+  
+  @UI.lineItem: [ {
+    position: 30 , 
+    importance: #MEDIUM, 
+    label: ''
+  } ]
+  @UI.identification: [ {
+    position: 30 , 
+    label: ''
+  } ]
+  objectDesc;
+  
+  @UI.hidden: true
+  localLastChanged;
+}

@@ -1,0 +1,7 @@
+@EndUserText.label: 'Financial planning - Financial groups'
+define service ZESD_PLN_HDR_BAS {
+  expose ZE_C_TB_PLN_HDR_BAS as PlanHeader;
+  expose ZE_C_TB_FG_BAS as FinancialGroups;
+  expose ZE_C_TB_FG_BAS_MON_VAL as AmountDistribution;
+  expose ZE_C_TB_PLN_ATT as Attachments;
+}

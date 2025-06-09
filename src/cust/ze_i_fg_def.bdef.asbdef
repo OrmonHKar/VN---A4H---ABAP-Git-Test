@@ -1,0 +1,41 @@
+managed implementation in class ZCL_E_BP_FG_DEF unique;
+strict ( 1 );
+with draft;
+
+define behavior for ZE_I_FG_DEF alias FGDef
+persistent table zetc_fg_def
+draft table ZETC_FG_DEF_DR
+etag master LocalLastChanged
+lock master total etag LastChanged
+authorization master( global )
+
+{
+  field ( mandatory : create )
+   GroupID;
+
+  field ( readonly )
+   LastChanged,
+   LocalLastChanged;
+
+  field ( readonly : update )
+   GroupID;
+
+
+  create;
+  update;
+  delete;
+
+  draft action Edit;
+  draft action Activate;
+  draft action Discard;
+  draft action Resume;
+  draft determine action Prepare;
+
+  mapping for ZETC_FG_DEF
+  {
+    GroupID = GROUP_ID;
+    GroupDesc = GROUP_DESC;
+    LocalLastChanged = LOCAL_LAST_CHANGED;
+    LastChanged = LAST_CHANGED;
+  }
+}

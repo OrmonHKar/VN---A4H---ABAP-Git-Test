@@ -1,0 +1,8 @@
+@EndUserText.label: 'Financial planning - CU-RU'
+define service ZESD_PLN_HDR_CU_RU {
+  expose ZE_C_TB_PLN_HDR as PlanHeader;
+  expose ZE_C_TB_INST_CU as CUInstallation;
+  expose ZE_C_TB_CU_BAS as ConstructionUnits;
+  expose ZE_C_TB_CU_FG as FinancialGroups;
+  expose ZE_C_TB_CU_FG_MON_VAL as AmountDistribution;
+}

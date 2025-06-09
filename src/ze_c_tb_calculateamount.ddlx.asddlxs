@@ -1,0 +1,14 @@
+@Metadata.layer: #CORE
+annotate entity ZE_I_TB_CALCULATEAMOUNT
+    with 
+{
+    @UI: {  lineItem:       [ { position: 10 } ],
+          identification: [ { position: 10 } ],
+          selectionField: [ { position: 10 } ] }
+    amount;
+    @UI: {  lineItem:       [ { position: 20 } ],
+          identification: [ { position: 20 } ],
+          selectionField: [ { position: 20 } ] }
+    fyear;
+    
+}

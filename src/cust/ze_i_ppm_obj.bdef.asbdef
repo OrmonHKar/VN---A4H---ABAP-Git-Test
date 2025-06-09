@@ -1,0 +1,44 @@
+managed implementation in class ZCL_E_BP_PPM_OBJ unique;
+strict ( 1 );
+with draft;
+
+define behavior for ZE_I_PPM_OBJ alias PPMObj
+persistent table zetc_ppm_obj
+draft table ZETC_PPM_OBJ_DR
+etag master LocalLastChanged
+lock master total etag LastChanged
+authorization master( global )
+
+{
+  field ( mandatory : create )
+   ObjectID,
+   ObjectType;
+
+  field ( readonly )
+   LastChanged,
+   LocalLastChanged;
+
+  field ( readonly : update )
+   ObjectID,
+   ObjectType;
+
+
+  create;
+  update;
+  delete;
+
+  draft action Edit;
+  draft action Activate;
+  draft action Discard;
+  draft action Resume;
+  draft determine action Prepare;
+
+  mapping for ZETC_PPM_OBJ
+  {
+    ObjectID = OBJECT_ID;
+    ObjectType = OBJECT_TYPE;
+    ObjectDesc = OBJECT_DESC;
+    LocalLastChanged = LOCAL_LAST_CHANGED;
+    LastChanged = LAST_CHANGED;
+  }
+}

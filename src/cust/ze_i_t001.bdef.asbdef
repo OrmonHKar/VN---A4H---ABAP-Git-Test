@@ -1,0 +1,42 @@
+managed implementation in class ZCL_E_BP_T001 unique;
+strict ( 1 );
+with draft;
+
+define behavior for ZE_I_T001 alias CompanyCode
+persistent table zetc_t001
+draft table ZETC_t001_DR
+etag master LocalLastChanged
+lock master total etag LastChanged
+authorization master( global )
+
+{
+  field ( mandatory : create )
+   Bukrs;
+
+  field ( readonly )
+   LastChanged,
+   LocalLastChanged;
+
+  field ( readonly : update )
+   Bukrs;
+
+
+  create;
+  update;
+  delete;
+
+  draft action Edit;
+  draft action Activate;
+  draft action Discard;
+  draft action Resume;
+  draft determine action Prepare;
+
+  mapping for ZETC_T001
+  {
+    Bukrs = BUKRS;
+    Butxt = BUTXT;
+    Land1 = LAND1;
+    LocalLastChanged = LOCAL_LAST_CHANGED;
+    LastChanged = LAST_CHANGED;
+  }
+}

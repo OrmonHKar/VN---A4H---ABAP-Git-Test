@@ -1,0 +1,40 @@
+@Metadata.layer: #CORE
+@UI: {
+  headerInfo: {
+    typeName: 'Financial group', 
+    typeNamePlural: 'Financial groups'
+  }
+}
+annotate view ZE_C_FG_DEF with
+{
+  @UI.facet: [ {
+    id: 'idIdentification', 
+    type: #IDENTIFICATION_REFERENCE, 
+    label: 'Financial group', 
+    position: 10 
+  } ]
+  @UI.lineItem: [ {
+    position: 10 , 
+    importance: #MEDIUM, 
+    label: 'Financial group'
+  } ]
+  @UI.identification: [ {
+    position: 10 , 
+    label: 'Financial group'
+  } ]
+  groupid;
+  
+  @UI.lineItem: [ {
+    position: 20 , 
+    importance: #MEDIUM, 
+    label: ''
+  } ]
+  @UI.identification: [ {
+    position: 20 , 
+    label: ''
+  } ]
+  groupdesc;
+  
+  @UI.hidden: true
+  locallastchanged;
+}

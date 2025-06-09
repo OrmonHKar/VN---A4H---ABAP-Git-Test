@@ -1,0 +1,4 @@
+@EndUserText.label: 'Service definition forZE_C_T001'
+define service ZE_E_SD_T001 {
+  expose ZE_C_T001 as CompanyCode;
+}

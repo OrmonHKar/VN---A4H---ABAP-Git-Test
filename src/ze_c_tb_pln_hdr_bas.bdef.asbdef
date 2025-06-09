@@ -1,0 +1,53 @@
+projection;
+use draft;
+
+define behavior for ZE_C_TB_PLN_HDR_BAS alias PlanHeader
+//use etag
+{
+  use create;
+  use update;
+  use delete;
+
+  use association _FGBas { create; with draft;}
+  use association _Attachments { create; with draft;}
+
+  use action copyHdr;
+}
+
+define behavior for ZE_C_TB_FG_BAS alias FGBas
+//use etag
+{
+  use update;
+  use delete;
+
+  use action calculateMonVal ;
+  use action deleteMonVal;
+
+  use association _PlnHdr { with draft; }
+ // use association _FG_BAS_MON_VAL  { create; with draft; }
+//  use association _FG_BAS_MON_VAL  {internal create; with draft; } // { create; }
+}
+
+define behavior for ZE_C_TB_FG_BAS_MON_VAL alias MonVal
+//use etag
+{
+//  use update;
+  use delete;
+
+  use association _PlnHdr { with draft; }
+  use association _FG_BAS { with draft; }
+
+
+}
+
+define behavior for ZE_C_TB_PLN_ATT alias Attachments
+//use etag
+{
+  use update;
+  use delete;
+
+  use association _PlnHdr { with draft; }
+
+
+
+}

@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_DTEL" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <DD04V>
+    <ROLLNAME>ZE_TV_OBJ_DESC</ROLLNAME>
+    <DDLANGUAGE>E</DDLANGUAGE>
+    <DOMNAME>TEXT50</DOMNAME>
+    <HEADLEN>18</HEADLEN>
+    <SCRLEN1>08</SCRLEN1>
+    <SCRLEN2>18</SCRLEN2>
+    <SCRLEN3>18</SCRLEN3>
+    <DDTEXT>Object description</DDTEXT>
+    <REPTEXT>Object description</REPTEXT>
+    <SCRTEXT_S>Obj Desc</SCRTEXT_S>
+    <SCRTEXT_M>Object description</SCRTEXT_M>
+    <SCRTEXT_L>Object description</SCRTEXT_L>
+    <DTELMASTER>E</DTELMASTER>
+    <REFKIND>D</REFKIND>
+    <ABAP_LANGUAGE_VERSION>5</ABAP_LANGUAGE_VERSION>
+   </DD04V>
+  </asx:values>
+ </asx:abap>
+</abapGit>

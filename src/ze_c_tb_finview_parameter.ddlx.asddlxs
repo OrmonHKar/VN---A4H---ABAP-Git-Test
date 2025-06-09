@@ -1,0 +1,12 @@
+@Metadata.layer: #CORE
+                     
+annotate entity ZE_I_TB_FINVIEW_PARAMETER
+    with 
+{
+    // Search Financial view
+    @EndUserText.label: 'Select the Finnancial view where you want to copy it'
+    @Consumption.valueHelpDefinition: [{ entity: { name: 'ZE_I_TD_FIN_VIEW', element: 'value_low'}, 
+                                         useForValidation: true }]
+    fin_view;  
+    
+}

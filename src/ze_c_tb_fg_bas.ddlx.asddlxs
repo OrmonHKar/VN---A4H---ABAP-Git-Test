@@ -1,0 +1,96 @@
+@Metadata.layer: #CORE
+
+@UI: {
+  headerInfo: { typeName: 'Direct Financial Group',
+                typeNamePlural: 'Direct Financial Groups',           
+                title: { type: #STANDARD, label: 'Direct financial group planning', value: 'GroupDesc' } },
+  presentationVariant: [{ sortOrder: [{ by: 'GroupId', direction:  #DESC }] }] }
+annotate entity ZE_C_TB_FG_BAS with
+{
+  @UI.facet: [ { id:            'FGBas',
+                   purpose:       #STANDARD,
+                   type:          #IDENTIFICATION_REFERENCE,
+                   label:         'Financial groups',
+                   position:      10 },
+                 { id:            'FGBasMonVal',
+                   purpose:       #STANDARD,
+                   type:          #LINEITEM_REFERENCE,
+                   label:         'Financial group monetary values',
+                   position:      20,
+                   targetElement: '_FG_BAS_MON_VAL'               
+                   }  ]
+
+  @UI.hidden: true
+  PlnHdrGuid;
+
+  @UI.hidden: true
+  SrcPlnHdrGuid;
+
+  @UI:{ identification: [{ position: 1, label: 'Fin. Group GUID' }] }
+  Guid;
+
+  @Consumption.valueHelpDefinition: [{ entity: { name: 'ZE_I_FG_DEF', element: 'GroupID'}, useForValidation: true }]
+  @UI: {  lineItem:       [ { position: 10 } ],
+          identification: [ { position: 10 } ],
+          selectionField: [ { position: 10 } ] }
+  GroupId;
+
+  @UI.hidden: true
+  @UI: {  lineItem:       [ { position: 20 } ],
+          identification: [ { position: 20 } ],
+          selectionField: [ { position: 20 } ] }
+  GroupDesc;
+
+  @UI.hidden: true
+  Logsys;
+
+  @Consumption.valueHelpDefinition: [{ entity: { name: 'ZE_I_TD_DISTR_LOGIC', element: 'value_low'}, useForValidation: true }]
+  @UI: {  lineItem:       [ { position: 30 } ],
+          identification: [ { position: 30 } ],
+          selectionField: [ { position: 30 } ] }
+  DistrLogic;
+
+  @UI: {  lineItem:       [ { position: 40 } ],
+          identification: [ { position: 40 } ],
+          selectionField: [ { position: 40 } ] }
+  InitialDate;
+
+  @UI: {  lineItem:       [ { position: 50 } ],
+          identification: [ { position: 50 } ],
+          selectionField: [ { position: 50 } ] }
+  CommissionedDate;
+
+  @UI: {  lineItem:       [ { position: 60 } ],
+          identification: [ { position: 60 } ],
+          selectionField: [ { position: 60 } ] }
+  TradingPartner;
+
+
+  @UI: {  lineItem:       [ { position: 70 } ],
+          identification: [ { position: 70 } ],
+          selectionField: [ { position: 70 } ] }
+  Comments;
+
+  @UI: {  lineItem:       [ { position: 80 }, { type: #FOR_ACTION, dataAction: 'calculateMonVal', label: 'Calculate distribution' }, { type: #FOR_ACTION, dataAction: 'deleteMonVal', label: 'Delete distribution' } ],
+          identification: [ { position: 80 }, { type: #FOR_ACTION, dataAction: 'calculateMonVal', label: 'Calculate distribution' }, { type: #FOR_ACTION, dataAction: 'deleteMonVal', label: 'Delete distribution' } ]  }
+  TotalAmount;
+
+  @UI.hidden: true
+  Currency;
+
+  @UI.hidden: true
+  CreatedBy;
+
+  @UI.hidden: true
+  CreatedAt;
+
+  @UI.hidden: true
+  LastChangedBy;
+
+  @UI.hidden: true
+  LastChangedAt;
+
+  @UI.hidden: true
+  LocalLastChangedAt;
+
+}

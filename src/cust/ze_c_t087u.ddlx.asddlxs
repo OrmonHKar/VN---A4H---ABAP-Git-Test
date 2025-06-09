@@ -1,0 +1,40 @@
+@Metadata.layer: #CORE
+@UI: {
+  headerInfo: {
+    typeName: 'Installation', 
+    typeNamePlural: 'Installations'
+  }
+}
+annotate view ZE_C_T087U with
+{
+  @UI.facet: [ {
+    id: 'idIdentification', 
+    type: #IDENTIFICATION_REFERENCE, 
+    label: 'Installation', 
+    position: 10 
+  } ]
+  @UI.lineItem: [ {
+    position: 10 , 
+    importance: #MEDIUM, 
+    label: ''
+  } ]
+  @UI.identification: [ {
+    position: 10 , 
+    label: ''
+  } ]
+  anlue;
+  
+  @UI.lineItem: [ {
+    position: 20 , 
+    importance: #MEDIUM, 
+    label: ''
+  } ]
+  @UI.identification: [ {
+    position: 20 , 
+    label: ''
+  } ]
+  anlueTxt;
+  
+  @UI.hidden: true
+  localLastChanged;
+}

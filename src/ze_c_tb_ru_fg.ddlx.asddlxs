@@ -1,0 +1,74 @@
+@Metadata.layer: #CORE
+
+@UI: {
+  headerInfo: { typeName: 'RU - FG',
+                typeNamePlural: 'RUs - FG',
+                title: { type: #STANDARD, label: 'RU - FG', value: 'ParentGuid' } },
+  presentationVariant: [{ sortOrder: [{ by: 'ParentGuid', direction:  #DESC }] }] }
+  
+annotate entity ZE_C_TB_RU_FG
+    with 
+{
+
+    @UI.facet: [ { id:            'RUFG',
+                   purpose:       #STANDARD,
+                   type:          #IDENTIFICATION_REFERENCE,
+                   label:         'RUsFG',
+                   position:      10 },
+                 { id:            'RUFGMonVal',
+                   purpose:       #STANDARD,
+                   type:          #LINEITEM_REFERENCE,
+                   label:         'RU FG Mon Val',
+                   position:      20,
+                   targetElement: '_RU_FG_MON_VAL'}  ]
+
+    @UI.hidden: true
+    PlnHdrGuid;
+    
+    @UI.hidden: true
+    SrcPlnHdrGuid;
+    
+    @UI:{ identification: [{ position: 1, label: 'Fin. Group GUID' }] }
+    Guid;
+    
+    @UI: {  lineItem:       [ { position: 10 } ],
+          identification: [ { position: 10 } ],
+          selectionField: [ { position: 10 } ] }
+    ParentGuid;
+    
+    @UI: {  lineItem:       [ { position: 20 } ],
+          identification: [ { position: 20 } ],
+          selectionField: [ { position: 20 } ] }
+    GroupId;
+    
+    @UI: {  lineItem:       [ { position: 30 } ],
+          identification: [ { position: 30 } ],
+          selectionField: [ { position: 30 } ] }
+    Logsys;
+    
+    @UI: {  lineItem:       [ { position: 40 } ],
+          identification: [ { position: 40 } ],
+          selectionField: [ { position: 40 } ] }
+    Comments;
+    
+    @UI: {  lineItem:       [ { position: 50 } ],
+          identification: [ { position: 50 } ],
+          selectionField: [ { position: 50 } ] }
+    TradingPartner;
+    
+    @UI.hidden: true
+    CreatedBy;
+    
+    @UI.hidden: true
+    CreatedAt;
+    
+    @UI.hidden: true
+    LastChangedBy;
+    
+    @UI.hidden: true
+    LastChangedAt;
+    
+    @UI.hidden: true
+    LocalLastChangedAt;
+    
+}

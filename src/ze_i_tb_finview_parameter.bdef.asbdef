@@ -1,0 +1,7 @@
+abstract;
+//strict ( 1 );
+
+define behavior for ZE_I_TB_FINVIEW_PARAMETER //alias <alias_name>
+{
+    field ( mandatory ) fin_view;
+}

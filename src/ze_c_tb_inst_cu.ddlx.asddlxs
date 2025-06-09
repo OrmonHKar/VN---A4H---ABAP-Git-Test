@@ -1,0 +1,53 @@
+@Metadata.layer: #CORE
+
+@UI: {
+  headerInfo: { typeName: 'Installation CU',
+                typeNamePlural: 'Installations CUs',
+                title: { type: #STANDARD, label: 'Installation CU', value: 'InstallationId' } },
+  presentationVariant: [{ sortOrder: [{ by: 'InstallationId', direction:  #DESC }] }] }
+annotate entity ZE_C_TB_INST_CU
+    with 
+{
+
+    @UI.facet: [ { id:            'INSTCU',
+                   purpose:       #STANDARD,
+                   type:          #IDENTIFICATION_REFERENCE,
+                   label:         'Constructions units installations',
+                   position:      10 },
+                 { id:            'CUBAS',
+                   purpose:       #STANDARD,
+                   type:          #LINEITEM_REFERENCE,
+                   label:         'Constructions units',
+                   position:      20,
+                   targetElement: '_CU'}  ]
+                   
+    @UI.hidden: true
+    PlnHdrGuid;
+    
+    @UI.hidden: true
+    SrcPlnHdrGuid;
+    
+    @UI:{ identification: [{ position: 1, label: 'Fin. Group GUID' }] }
+    Guid;
+    
+    @Consumption.valueHelpDefinition: [{ entity: { name: 'ZE_C_T087U_SPECIFIC', element: 'Anlue'}, useForValidation: true }]
+    @UI: {  lineItem:       [ { position: 10 } ],
+            identification: [ { position: 10 } ],
+            selectionField: [ { position: 10 } ] }
+    InstallationId;
+    
+    @UI.hidden: true
+    CreatedBy;
+    
+    @UI.hidden: true
+    CreatedAt;
+    
+    @UI.hidden: true
+    LastChangedBy;
+    
+    @UI.hidden: true
+    LastChangedAt;
+    
+    @UI.hidden: true
+    LocalLastChangedAt;    
+}

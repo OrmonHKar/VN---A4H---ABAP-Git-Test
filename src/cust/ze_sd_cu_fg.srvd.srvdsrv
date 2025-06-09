@@ -1,0 +1,4 @@
+@EndUserText.label: 'Service definition forZE_C_CU_FG'
+define service ZE_SD_CU_FG {
+  expose ZE_C_CU_FG as CUFGDef;
+}

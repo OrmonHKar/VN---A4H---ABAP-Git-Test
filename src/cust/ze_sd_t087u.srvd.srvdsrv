@@ -1,0 +1,4 @@
+@EndUserText.label: 'Service definition forZE_C_T087U'
+define service ZE_SD_T087U {
+  expose ZE_C_T087U as Installation;
+}

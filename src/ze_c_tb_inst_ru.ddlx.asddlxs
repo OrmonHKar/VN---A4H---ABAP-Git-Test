@@ -1,0 +1,55 @@
+@Metadata.layer: #CORE
+
+@UI: {
+  headerInfo: { typeName: 'Direct Installation RU',
+                typeNamePlural: 'Direct Installations RUs',
+                title: { type: #STANDARD, label: 'Direct Installation RU', value: 'InstallationId' } },
+  presentationVariant: [{ sortOrder: [{ by: 'InstallationId', direction:  #DESC }] }] }
+
+annotate entity ZE_C_TB_INST_RU
+    with 
+{
+
+    @UI.facet: [ { id:            'INSTRU',
+                   purpose:       #STANDARD,
+                   type:          #IDENTIFICATION_REFERENCE,
+                   label:         'Installations RUs',
+                   position:      10 },
+                 { id:            'RUBAS',
+                   purpose:       #STANDARD,
+                   type:          #LINEITEM_REFERENCE,
+                   label:         'RU BAS',
+                   position:      20,
+                   targetElement: '_RU'}  ]
+
+    @UI.hidden: true
+    PlnHdrGuid;
+    
+    @UI.hidden: true
+    SrcPlnHdrGuid;
+    
+    @UI:{ identification: [{ position: 1, label: 'Fin. Group GUID' }] }
+    Guid;
+    
+    @Consumption.valueHelpDefinition: [{ entity: { name: 'ZE_I_T087U', element: 'InstallationId'}, useForValidation: true }]
+    @UI: {  lineItem:       [ { position: 10 } ],
+            identification: [ { position: 10 } ],
+            selectionField: [ { position: 10 } ] }
+    InstallationId;
+    
+    @UI.hidden: true
+    CreatedBy;
+    
+    @UI.hidden: true
+    CreatedAt;
+    
+    @UI.hidden: true
+    LastChangedBy;
+    
+    @UI.hidden: true
+    LastChangedAt;
+    
+    @UI.hidden: true
+    LocalLastChangedAt;
+    
+}

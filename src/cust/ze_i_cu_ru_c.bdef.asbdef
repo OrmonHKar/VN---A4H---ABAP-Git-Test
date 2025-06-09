@@ -1,0 +1,55 @@
+managed implementation in class ZCL_E_BP_CU_RU_C unique;
+strict ( 1 );
+with draft;
+
+define behavior for ZE_I_CU_RU_C alias CURUC
+persistent table zetc_cu_ru_c
+draft table ZETC_CU_RU_C_DR
+etag master LocalLastChanged
+lock master total etag LastChanged
+authorization master( global )
+
+{
+  field ( mandatory : create )
+   CompanyCode,
+   CuID,
+   Category,
+   RuID;
+
+  field ( readonly )
+   LastChanged,
+   LocalLastChanged;
+
+  field ( readonly : update )
+   CompanyCode,
+   CuID,
+   Category,
+   RuID;
+
+
+  create;
+  update;
+  delete;
+
+  draft action Edit;
+  draft action Activate;
+  draft action Discard;
+  draft action Resume;
+  draft determine action Prepare;
+
+  mapping for ZETC_CU_RU_C
+  {
+    CompanyCode = COMPANY_CODE;
+    CuID = CU_ID;
+    Category = CATEGORY;
+    RuID = RU_ID;
+    CostTransfer = COST_TRANSFER;
+    ZeSpeGen = ZE_SPE_GEN;
+    ZeDirectCuDef = ZE_DIRECT_CU_DEF;
+    ZeNoDirectCuDef = ZE_NO_DIRECT_CU_DEF;
+    ZeValidTo = ZE_VALID_TO;
+    ZeComment = ZE_COMMENT;
+    LocalLastChanged = LOCAL_LAST_CHANGED;
+    LastChanged = LAST_CHANGED;
+  }
+}

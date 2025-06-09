@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_DTEL" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <DD04V>
+    <ROLLNAME>ZE_TV_PPM_OBJ_GUID</ROLLNAME>
+    <DDLANGUAGE>E</DDLANGUAGE>
+    <DOMNAME>CHAR24</DOMNAME>
+    <HEADLEN>36</HEADLEN>
+    <SCRLEN1>10</SCRLEN1>
+    <SCRLEN2>20</SCRLEN2>
+    <SCRLEN3>36</SCRLEN3>
+    <DDTEXT>ID for Buckets, Items, Initiatives, cProjects</DDTEXT>
+    <REPTEXT>ID for Buckets, Items, Initiatives</REPTEXT>
+    <SCRTEXT_S>ID PPM O</SCRTEXT_S>
+    <SCRTEXT_M>ID for PPM objects</SCRTEXT_M>
+    <SCRTEXT_L>ID for Buckets, Items, Initiatives</SCRTEXT_L>
+    <DTELMASTER>E</DTELMASTER>
+    <REFKIND>D</REFKIND>
+    <ABAP_LANGUAGE_VERSION>5</ABAP_LANGUAGE_VERSION>
+   </DD04V>
+  </asx:values>
+ </asx:abap>
+</abapGit>

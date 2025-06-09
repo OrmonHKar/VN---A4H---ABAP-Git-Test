@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_DTEL" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <DD04V>
+    <ROLLNAME>ZE_TV_CO_PERIO</ROLLNAME>
+    <DDLANGUAGE>E</DDLANGUAGE>
+    <HEADLEN>03</HEADLEN>
+    <SCRLEN1>10</SCRLEN1>
+    <SCRLEN2>15</SCRLEN2>
+    <SCRLEN3>20</SCRLEN3>
+    <DDTEXT>Period</DDTEXT>
+    <REPTEXT>Per</REPTEXT>
+    <SCRTEXT_S>Period</SCRTEXT_S>
+    <SCRTEXT_M>Period</SCRTEXT_M>
+    <SCRTEXT_L>Period</SCRTEXT_L>
+    <APPLCLASS>KA</APPLCLASS>
+    <DTELMASTER>D</DTELMASTER>
+    <DATATYPE>NUMC</DATATYPE>
+    <LENG>000003</LENG>
+    <OUTPUTLEN>000003</OUTPUTLEN>
+    <ABAP_LANGUAGE_VERSION>5</ABAP_LANGUAGE_VERSION>
+   </DD04V>
+   <I18N_LANGS>
+    <LANGU>D</LANGU>
+   </I18N_LANGS>
+   <DD04_TEXTS>
+    <item>
+     <DDLANGUAGE>D</DDLANGUAGE>
+     <DDTEXT>Periode</DDTEXT>
+     <REPTEXT>Per</REPTEXT>
+     <SCRTEXT_S>Periode</SCRTEXT_S>
+     <SCRTEXT_M>Periode</SCRTEXT_M>
+     <SCRTEXT_L>Periode</SCRTEXT_L>
+    </item>
+   </DD04_TEXTS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

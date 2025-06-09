@@ -1,0 +1,63 @@
+projection;
+//strict ( 1 ); //Uncomment this line in order to enable strict mode 1. The strict mode is prerequisite to be future proof regarding syntax and to be able to release your BO.
+use draft;
+
+define behavior for ZE_C_TB_PLN_HDR alias PlanHeader
+{
+  use create;
+  use update;
+  use delete;
+
+  use action resume;
+  use action Edit;
+  use action Activate;
+  use action Discard;
+  use action Prepare;
+
+  use association _InstCu { create; with draft; }
+
+  use action copyHdr;
+  use action getTotals;
+
+}
+
+define behavior for ZE_C_TB_INST_CU alias InstCU
+{
+  use update;
+  use delete;
+
+  use association _PlnHdr { with draft; }
+  use association _CU { create; with draft; }
+}
+
+define behavior for ZE_C_TB_CU_BAS alias CU
+{
+  use update;
+  use delete;
+
+  use action calculateCUMonVal;
+  //use action copyHdr;
+
+  use association _InstCU { with draft; }
+  use association _CU_FG { create; with draft; }
+  use association _PlnHdr { with draft; }
+}
+
+define behavior for ZE_C_TB_CU_FG alias CUFG
+{
+  use update;
+  use delete;
+
+  use association _CU { with draft; }
+  use association _PlnHdr { with draft; }
+  use association _CU_FG_MON_VAL { create; with draft; }
+}
+
+define behavior for ZE_C_TB_CU_FG_MON_VAL alias CUFGMonVal
+{
+  use update;
+  use delete;
+
+  use association _CU_FG { with draft; }
+  use association _PlnHdr { with draft; }
+}

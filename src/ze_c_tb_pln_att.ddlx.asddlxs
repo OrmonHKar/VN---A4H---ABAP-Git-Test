@@ -1,0 +1,39 @@
+@Metadata.layer: #CORE
+@UI: {
+  headerInfo: { typeName: 'Planning attachment',
+                typeNamePlural: 'Planning attachments',
+                imageUrl: 'Attachment',
+                title: { type: #STANDARD, label: 'Financial planning attachment', value: 'Comments' } },
+  presentationVariant: [{ sortOrder: [{ by: 'AttGuid', direction:  #DESC }] }] }
+
+annotate entity ZE_C_TB_PLN_ATT with
+{
+  @UI.facet: [{
+            id: 'Attachments',
+            purpose: #STANDARD,
+            label: 'Attachment Information',
+            type: #IDENTIFICATION_REFERENCE,
+            position: 10
+        }]
+
+@UI.hidden: true
+  AttGuid;
+  @UI: {
+    lineItem: [{ position: 20 }],
+    identification: [{ position: 20 }]
+  }
+  Comments;
+  @UI: {
+    lineItem: [{ position: 30 }],
+    identification: [{ position: 30 }]
+  }
+  Attachment;
+  @UI.hidden: true
+  Mimetype;
+  @UI: {
+    lineItem: [{ position: 50 }],
+    identification: [{ position: 50 }]
+  }
+  @EndUserText.label: 'File Name'
+  Filename;
+}
